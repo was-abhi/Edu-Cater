@@ -30,3 +30,10 @@ def test_api():
         "success": True,
         "message": "Frontend can communicate with Edu-Cater API"
     }
+
+@app.get("/api/v1/test")
+def test_api():
+    return {
+        "success": True,
+        "message": "Frontend can communicate with Edu-Cater API"
+    }
