@@ -1,7 +1,10 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from app.routes.recommendations import router as recommendations_router
 
 app = FastAPI(title="Edu-Cater API")
+
+app.include_router(recommendations_router)
 
 app.add_middleware(
     CORSMiddleware,
