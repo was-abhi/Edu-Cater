@@ -1,6 +1,6 @@
 
 from fastapi import APIRouter, HTTPException
-from sqlalchemy import text
+from sqlalchemy import text, bindparam
 from sqlalchemy.exc import SQLAlchemyError
 
 from app.database import engine
@@ -23,39 +23,34 @@ RECOMMENDATION_QUERY = text("""
     FROM public.colleges c
     JOIN public.college_cutoffs cut
         ON c.college_code = cut.college_code
-    WHERE cut.course_code = :course_code
+    WHERE cut.course_code IN :course_codes
       AND cut.category = :category
       AND cut.closing_rank >= :keam_rank
+      AND c.college_type IN :types
     ORDER BY cut.closing_rank ASC
-""")
+""").bindparams(
+    bindparam("course_codes", expanding=True),
+    bindparam("types", expanding=True),
+)
 
 
 @router.post("/recommendations")
 def get_recommendations(request: RecommendationRequest):
-    recommendations = []
-
     try:
         with engine.connect() as connection:
-            for course_code in request.courses:
-                result = connection.execute(
-                    RECOMMENDATION_QUERY,
-                    {
-                        "course_code": course_code,
-                        "category": request.category,
-                        "keam_rank": request.keam_rank,
-                    },
-                )
+            result = connection.execute(
+                RECOMMENDATION_QUERY,
+                {
+                    "course_codes": request.courses,
+                    "category": request.category,
+                    "keam_rank": request.keam_rank,
+                    "types": request.types,
+                },
+            )
 
-                for row in result.mappings():
-                    college = dict(row)
-
-                    if (
-                        request.types
-                        and college["college_type"] not in request.types
-                    ):
-                        continue
-
-                    recommendations.append(college)
+            recommendations = [
+                dict(row) for row in result.mappings()
+            ]
 
     except SQLAlchemyError:
         raise HTTPException(
@@ -68,4 +63,3 @@ def get_recommendations(request: RecommendationRequest):
         "count": len(recommendations),
         "recommendations": recommendations,
     }
- 

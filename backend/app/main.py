@@ -4,6 +4,7 @@ from app.routes.recommendations import router as recommendations_router
 from fastapi import HTTPException
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
+from app.database import engine
 
 from app.database import engine
 
@@ -64,3 +65,39 @@ def test_api():
         "success": True,
         "message": "Frontend can communicate with Edu-Cater API"
     }
+
+#just checking if the cutoff college db works
+@app.get("/debug/cutoffs")
+def debug_cutoffs():
+    queries = {
+        "colleges": "SELECT COUNT(*) FROM public.colleges",
+        "cutoffs": "SELECT COUNT(*) FROM public.college_cutoffs",
+        "courses": """
+            SELECT DISTINCT course_code
+            FROM public.college_cutoffs
+            ORDER BY course_code
+        """,
+        "categories": """
+            SELECT DISTINCT category
+            FROM public.college_cutoffs
+            ORDER BY category
+        """,
+        "college_types": """
+            SELECT DISTINCT college_type
+            FROM public.colleges
+            ORDER BY college_type
+        """,
+    }
+
+    output = {}
+
+    with engine.connect() as connection:
+        for key, query in queries.items():
+            result = connection.execute(text(query))
+
+            if key in ("colleges", "cutoffs"):
+                output[key] = result.scalar()
+            else:
+                output[key] = [row[0] for row in result.fetchall()]
+
+    return output
