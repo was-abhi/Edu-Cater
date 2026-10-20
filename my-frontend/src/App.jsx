@@ -13,16 +13,18 @@ const courses = [
 ];
 
 const collegeTypes = [
-  "Government",
-  "Private",
-  "Semi-Govt / Autonomous",
+  { label: "Government", value: "government" },
+  { label: "Private", value: "private" },
+  { label: "Semi-Govt / Autonomous", value: "autonomous" },
 ];
 
 function App() {
   const [rank, setRank] = useState("");
   const [category, setCategory] = useState("GN");
   const [selectedCourses, setSelectedCourses] = useState(["CS"]);
-  const [selectedTypes, setSelectedTypes] = useState([...collegeTypes]);
+  const [selectedTypes, setSelectedTypes] = useState(
+    collegeTypes.map((type) => type.value)
+  );
 
   const [cutoffs, setCutoffs] = useState([]);
   const [searched, setSearched] = useState(false);
@@ -102,7 +104,7 @@ function App() {
     setRank("");
     setCategory("GN");
     setSelectedCourses(["CS"]);
-    setSelectedTypes([...collegeTypes]);
+    setSelectedTypes(collegeTypes.map((type) => type.value));
     setCutoffs([]);
     setSearched(false);
     setError("");
@@ -209,18 +211,25 @@ function App() {
               Choose the institutions to include.
             </p>
             <div className="type-options">
+              
               {collegeTypes.map((type) => (
-                <label className="type-choice" key={type}>
+                <label className="type-choice" key={type.value}>
                   <input
                     type="checkbox"
-                    checked={selectedTypes.includes(type)}
+                    checked={selectedTypes.includes(type.value)}
                     onChange={() =>
-                      toggleSelection(type, selectedTypes, setSelectedTypes)
+                      toggleSelection(
+                        type.value,
+                        selectedTypes,
+                        setSelectedTypes
+                      )
                     }
                   />
-                  <span>{type}</span>
+                  <span>{type.label}</span>
                 </label>
               ))}
+
+              
             </div>
           </fieldset>
 
