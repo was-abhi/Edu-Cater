@@ -4,11 +4,11 @@ from sqlalchemy import text, bindparam
 from sqlalchemy.exc import SQLAlchemyError
 
 from app.database import engine
-from app.schemas.recommendation import RecommendationRequest
+from app.schemas.cutoff import CutoffRequest
 
-router = APIRouter(prefix="/api/v1", tags=["Recommendations"])
+router = APIRouter(prefix="/api/v1", tags=["Cutoff Finder"])
 
-RECOMMENDATION_QUERY = text("""
+CUTOFF_QUERY = text("""
     SELECT
         c.id AS college_id,
         c.college_code,
@@ -34,12 +34,12 @@ RECOMMENDATION_QUERY = text("""
 )
 
 
-@router.post("/recommendations")
-def get_recommendations(request: RecommendationRequest):
+@router.post("/cutoffs")
+def get_cutoffs(request: CutoffRequest):
     try:
         with engine.connect() as connection:
             result = connection.execute(
-                RECOMMENDATION_QUERY,
+                CUTOFF_QUERY,
                 {
                     "course_codes": request.courses,
                     "category": request.category,
@@ -48,18 +48,18 @@ def get_recommendations(request: RecommendationRequest):
                 },
             )
 
-            recommendations = [
+            cutoffs = [
                 dict(row) for row in result.mappings()
             ]
 
     except SQLAlchemyError:
         raise HTTPException(
             status_code=503,
-            detail="Unable to retrieve college recommendations",
+            detail="Unable to retrieve college cutoff data",
         )
 
     return {
         "success": True,
-        "count": len(recommendations),
-        "recommendations": recommendations,
+        "count": len(cutoffs),
+        "cutoffs": cutoffs,
     }

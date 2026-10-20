@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes.recommendations import router as recommendations_router
+from app.routes.cutoff import router as cutoff_router
 from fastapi import HTTPException
 from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
@@ -11,7 +11,7 @@ from app.database import engine
 app = FastAPI(title="Edu-Cater API")
 
 #route for recc api
-app.include_router(recommendations_router)
+app.include_router(cutoff_router)
 
 #middleware with frontend details
 app.add_middleware(

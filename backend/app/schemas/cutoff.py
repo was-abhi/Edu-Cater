@@ -4,7 +4,7 @@ from typing import Literal
 from pydantic import BaseModel, Field
 
 
-class RecommendationRequest(BaseModel):
+class CutoffRequest(BaseModel):
     keam_rank: int = Field(gt=0)
 
     category: Literal[
