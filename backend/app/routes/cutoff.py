@@ -33,10 +33,21 @@ CUTOFF_QUERY = text("""
     bindparam("types", expanding=True),
 )
 
+COLLEGE_TYPE_MAP = {
+    "Government": "governemnt",
+    "Private": "private",
+    "Semi-Govt / Autonomous": "autonmous",
+}
+
 
 @router.post("/cutoffs")
 def get_cutoffs(request: CutoffRequest):
     try:
+        database_types = [
+            COLLEGE_TYPE_MAP.get(college_type, college_type)
+            for college_type in request.types
+        ]
+
         with engine.connect() as connection:
             result = connection.execute(
                 CUTOFF_QUERY,
@@ -44,7 +55,7 @@ def get_cutoffs(request: CutoffRequest):
                     "course_codes": request.courses,
                     "category": request.category,
                     "keam_rank": request.keam_rank,
-                    "types": request.types,
+                    "types": database_types,
                 },
             )
 
