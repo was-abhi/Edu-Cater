@@ -1,0 +1,134 @@
+id,college_code,college_name,college_type,district,pass_percentage,cutoff_sm,nba_accredited,naac_accredited
+1,AIK,"Albertian Institute of Science and Technology,",private,Ernakulam,62.97,28637,True,False
+2,MBC,Mar Baselios Christian College of Engineering,private,Idukki,82.05,42000,True,True
+3,ICE,"Ilahia College of Engineering and Technology,",private,Ernakulam,58.29,39027,True,False
+4,KIT,"Kottayam Institute of Technology and Science,",private,Kottayam,60.0,39490,True,False
+5,SIT,"Sarabhai Institute of Science and Technology,",private,Thiruvananthapuram,62.97,34159,True,False
+6,AJC,"Amal Jyothi College of Engineering, Kottayam",autonomous,Kottayam,62.59,19111,True,True
+7,ATP,"Ahalia School of Engineering and Technology,",private,Palakkad,58.29,32290,True,False
+8,FIT,"Federal Institute of Science and Technology,",autonomous,Ernakulam,62.97,8059,True,True
+9,SNP,"Sree Narayana Institute of Technology, Adoor",private,Pathanamthitta,34.81,30394,True,False
+10,PEC,"College of Engineering Pathanapuram, Kollam",autonomous,Kollam,60.75,31483,True,False
+11,BMC,"Baselios Mathews II College of Engineering,",private,Kollam,62.59,48802,True,True
+12,TRV,"Government Engineering College Barton Hill,",government,Thiruvananthapuram,72.78,3727,True,False
+13,DMC,"M. Dasan Institute of Technology, Kozhikode",private,Kozhikode,34.81,41278,True,False
+14,CEK,"College of Engineering,Kottarakkara, Kollam",private,Kollam,51.55,32246,True,False
+15,KKE,"Government Engineering College, Kozhikkode",government,Kozhikode,66.76,5044,True,False
+16,TOC,"Toc H Institute of Science and Technology,",private,Ernakulam,62.97,19857,True,True
+17,TVE,"College of Engineering, Thiruvananthapuram",government,Thiruvananthapuram,60.75,4481,True,False
+18,UKP,"UKF College of Engineering and Technology,",private,Kollam,58.29,38855,True,False
+19,MGP,"Saintgits College of Engineering, Kottayam",autonomous,Kottayam,40.78,12821,True,False
+20,CIM,Mentor Academy for Design Entrepreneurship,private,Ernakulam,65.0,24302,False,False
+21,IGW,Indira Gandhi Institute of Engineering and,private,Ernakulam,38.24,47002,True,False
+22,MEE,"MES College of Engineering and Technology,",private,Ernakulam,58.29,40544,True,False
+23,KVE,KVM College of Engineering and Information,private,Alappuzha,58.29,49683,True,False
+24,MUS,"Muslim Association College of Engineering,",private,Thiruvananthapuram,25.0,41288,True,True
+25,SNC,Sree Narayana Guru College of Engineering,private,Kannur,40.78,37928,True,True
+26,ASI,Adi Shankara Institute of Engineering and,private,Ernakulam,40.78,16679,True,True
+27,MES,"M E S College of Engineering, Kuttippuram",private,Malappuram,60.75,19209,True,True
+28,MLM,"Mangalam College of Engineering, Kottayam",private,Kottayam,28.29,26978,True,True
+29,TLY,"College of Engineering,Thalassery, Kannur",autonomous,Kannur,57.8,13728,True,False
+30,NIE,Nirmala College of Engineering Technology,private,Thrissur,28.29,40524,True,False
+31,KMT,KMCT Institute of Emerging Technology and,private,Kozhikode,60.0,34842,True,True
+32,KNR,"Government College of Engineering, Kannur",government,Kannur,68.69,3019,True,False
+33,NCE,Nehru College of Engineering and Research,autonomous,Thrissur,38.24,32779,True,True
+34,VML,"Vimal Jyothi Engineering College, Kannur",private,Kannur,66.44,27318,True,True
+35,UCC,"Institute of Engineering and Technology,",autonomous,Ernakulam,62.97,16679,True,False
+36,VAS,"Vidya Academy of Science and Technology,",private,Thrissur,62.97,21238,True,False
+37,PJR,"College of Engineering Poonjar, Kottayam",autonomous,Kottayam,58.29,32189,True,False
+38,VAK,"Vidya Academy of Science and Technology,",private,Thrissur,62.97,21238,True,False
+39,MBI,Mar Baselios Institute of Technology and,private,Ernakulam,34.81,21791,True,False
+40,PKD,"Government Engineering College, Palakkad",government,Palakkad,66.76,4589,True,False
+41,MGE,"MGM College of Engineering & Technology,",private,Ernakulam,68.69,44642,True,False
+42,TCR,"Government Engineering College, Thrissur",government,Thrissur,72.78,1004,True,False
+43,KNP,"College of Engineering, Karunagappally,",autonomous,Kollam,62.41,23554,True,False
+44,CCE,"Christ College of Engineering, Thrissur",private,Thrissur,82.05,11866,True,False
+45,MBT,Mar Baselios College of Engineering and,autonomous,Thiruvananthapuram,38.24,11297,True,True
+46,EKC,"Eranad Knowledge City Technical Campus,",private,Malappuram,65.0,47598,False,False
+47,MLT,"Malabar Institute of Technology, Kannur",private,Kannur,45.45,39031,True,False
+48,UNT,"Universal Engineering College, Thrissur",private,Thrissur,48.58,39831,True,False
+49,WYD,"Government Engineering College, Wayanad",government,Wayanad,72.78,22891,True,False
+50,NSS,"N S S College of Engineering, Palakkad",government,Palakkad,74.42,3031,True,False
+51,PRN,"College of Engineering Perumon, Kollam",autonomous,Kollam,62.41,15122,True,False
+52,LBT,"LBS Institute of Technology for Women,",autonomous,Thiruvananthapuram,60.0,10169,True,False
+53,MAC,"Mar Athanasius College of Engineering,",government,Ernakulam,74.42,1944,False,True
+54,IDK,"Government Engineering College, Idukki",government,Idukki,66.76,7477,True,False
+55,RIE,Rajadhani Institute of Engineering and,private,Thiruvananthapuram,38.24,38142,True,False
+56,TEC,"Travancore Engineering College, Kollam",private,Kollam,61.92,46154,True,False
+57,VJC,Viswajyothi College of Engineering and,private,Ernakulam,62.59,18557,True,True
+58,PRP,"CAPE College of Engineering, Punnapra,",autonomous,Alappuzha,60.75,37866,True,False
+59,KMC,"KMCT College of Engineering, Kozhikode",private,Kozhikode,25.0,29912,True,False
+60,KMW,"KMCT College of Engineering for Women,",private,Kozhikode,25.0,42808,True,False
+61,CEN,"College of Engineering and Technology,",private,Kannur,58.29,11297,True,False
+62,IES,"I E S College of Engineering, Thrissur",private,Thrissur,31.97,39395,True,False
+63,SJC,St Josephs College of Engineering and,autonomous,Kottayam,38.24,16325,True,False
+64,JBT,Jai Bharath College of Management and,private,Ernakulam,28.29,43152,True,True
+65,SPT,Sreepathy Institute of Management and,private,Palakkad,60.0,36865,True,False
+66,KSD,"LBS College of Engineering, Kasaragod",autonomous,Kasaragod,61.62,15270,True,False
+67,STC,St Thomas Colllege of Engineering and,private,Alappuzha,38.24,47842,True,False
+68,TKI,"T K M Institute of Technology, Kollam",private,Kollam,60.0,1567,True,False
+69,JCE,Jawaharlal College of Engineering and,autonomous,Palakkad,28.29,28207,True,True
+70,JEC,"Jyothi Engineering College, Thrissur",autonomous,Thrissur,73.6,21443,True,False
+71,MET,"Mets School of Engineering, Thrissur",private,Thrissur,57.8,46029,True,True
+72,KTE,Government Rajiv Gandhi Institute of,government,Kottayam,29.01,2445,True,False
+73,STI,St. Thomas Institute For Science and,private,Thiruvananthapuram,62.97,48067,True,True
+74,LMC,Lourdes Matha College of Science and,private,Thiruvananthapuram,38.24,45245,True,False
+75,TCE,"TOMS College of Engineering,Kottayam",private,Kottayam,81.35,48065,True,True
+76,JIT,John Cox Memorial C S I Institute of,private,Thiruvananthapuram,29.01,38434,False,False
+77,TKM,"T K M College of Engineering, Kollam",government,Kollam,81.35,1567,True,False
+78,MDL,"Model Engineering College, Ernakulam",autonomous,Ernakulam,83.05,1286,True,False
+79,PTA,"College of Engineering, Kallooppara,",autonomous,Pathanamthitta,65.07,21065,True,False
+80,STM,St.Thomas College of Engineering and,private,Kannur,38.24,33715,True,False
+81,VIT,"VISAT Engineering College, Ernakulam",private,Ernakulam,72.78,41168,True,False
+82,VKE,Valia Koonambaikulathamma College of,private,Kollam,62.59,43525,True,True
+83,TJE,"Thejus Engineering College, Thrissur",private,Thrissur,38.97,43577,True,False
+84,MUT,Muthoot Institute of Technology and,autonomous,Ernakulam,60.0,6012,True,False
+85,SHR,Sahrdaya College of Engineering and,autonomous,Thrissur,38.24,24494,True,True
+86,AWH,"AWH Engineering College, Kozhikkode",private,Kozhikode,66.76,45615,True,False
+87,KME,"K M E A Engineering College, Cochin",private,Ernakulam,34.32,38894,True,False
+88,MCT,Mohandas College of Engineering and,private,Thiruvananthapuram,38.24,43889,True,True
+89,SBC,"Sree Buddha College of Engineering,",private,Alappuzha,74.42,31923,True,True
+90,MCK,Musaliar College of Engineering and,private,Pathanamthitta,38.24,48524,True,False
+91,AEC,"College of Engineering of Aranmula,",autonomous,Pathanamthitta,83.42,32483,True,False
+92,PAA,P A Aziz College of Engineering and,private,Thiruvananthapuram,38.24,42075,True,True
+93,VVT,"Veda Vyasa Institute of Technology,",private,Malappuram,34.81,51400,True,False
+94,SNG,Sree Narayana Gurukulam College of,private,Ernakulam,73.82,26910,True,True
+95,RET,Rajagiri School of Engineering and,autonomous,Ernakulam,38.24,5444,True,True
+96,UCK,"University College of Engineering,",autonomous,Thiruvananthapuram,45.95,16393,True,True
+97,CEM,"College of Engineering Muttathara,",autonomous,Thiruvananthapuram,46.46,23126,True,False
+98,MEC,Malabar College of Engineering and,private,Thrissur,61.62,44475,True,True
+99,PRC,"Providence College of Engineering,",private,Alappuzha,44.88,40557,True,True
+100,TKR,"College of Engineering, Trikaripur",autonomous,Kasaragod,66.5,18888,True,False
+101,CHN,"College of Engineering,Chengannoor",autonomous,Alappuzha,68.69,7773,True,False
+102,MZC,"Mount Zion College of Engineering,",private,Pathanamthitta,25.0,42211,True,True
+103,MEA,"M E A Engineering College, Vengoor",private,Malappuram,34.32,22928,True,False
+104,HGW,"Holy Grace Academy of Engineering,",private,Thrissur,27.43,35648,True,False
+105,AME,Rajadhani Institute of Science and,private,Palakkad,62.97,45859,True,False
+106,VPE,"Mahaguru Institute of Technology,",private,Alappuzha,45.45,40639,True,False
+107,KGR,"College of Engineering Kidangoor,",autonomous,Kottayam,58.88,19892,True,False
+108,YCE,Younus College of Engineering and,private,Kollam,38.24,36930,True,True
+109,CMA,Carmel College of Engineering and,private,Alappuzha,27.43,30785,True,False
+110,CEC,"College of Engineering, Cherthala",autonomous,Alappuzha,74.48,17973,True,False
+111,VDA,"College of Engineering, Vadakara",autonomous,Kozhikode,51.55,15754,True,False
+112,KMI,KMCT Institute of Technology and,private,Malappuram,60.0,21869,True,False
+113,MCC,"Musaliar College Of Engineering,",private,Thiruvananthapuram,28.29,31338,True,True
+114,CEA,"College of Engineering, Attingal",autonomous,Thiruvananthapuram,48.67,21363,True,False
+115,RCE,Royal College of Engineering and,private,Thrissur,38.24,45141,True,True
+116,TCT,"Trinity College of Engineering,",private,Thiruvananthapuram,40.78,43044,True,False
+117,SNM,SNM Institute of Management and,private,Ernakulam,60.0,42763,True,False
+118,MEK,MES Institute of Technology and,private,Kollam,60.0,50577,True,False
+119,BJK,"Bishop Jerome Institute, Kollam",private,Kollam,29.01,31920,True,False
+120,KMY,KMCT College of Engineering for,private,Kozhikode,25.0,42808,True,True
+121,ECE,ICCS College of Engineering and,private,Thrissur,31.97,39184,True,True
+122,KMZ,KMCT College of Engineering for,private,Kozhikode,25.0,42808,True,True
+123,KMV,KMCT College of Engineering for,private,Kozhikode,25.0,42808,True,True
+124,SCM,SCMS School of Engineering and,autonomous,Ernakulam,38.24,16645,True,False
+125,MNR,"College of Engineering, Munnar",autonomous,Idukki,58.29,24983,True,False
+126,ADR,"College of Engineering, Adoor",autonomous,Pathanamthitta,58.29,14702,True,False
+127,SCT,"S C T College of Engineering,",autonomous,Thiruvananthapuram,25.0,4481,True,True
+128,MHP,"ACE College Of Engineering,",private,Thiruvananthapuram,27.43,22363,True,True
+129,MCE,"Marian Engineering College,",private,Thiruvananthapuram,61.92,24470,True,False
+130,MGC,"M G College of Engineering,",autonomous,Thiruvananthapuram,81.35,44741,True,True
+131,GIK,Gregorian Institute of,private,Kottayam,34.81,42031,True,False
+132,UCE,University College of,autonomous,Thiruvananthapuram,45.95,16393,True,False
+133,CCV,MGM TECHNOLOGICAL,private,Ernakulam,60.0,44642,False,False

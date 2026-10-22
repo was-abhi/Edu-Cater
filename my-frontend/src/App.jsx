@@ -2,15 +2,16 @@
 import { useState } from "react";
 import "./App.css";
 
-const API_URL = "http://127.0.0.1:8000/api/v1/cutoffs";
+import FeatureSelector from "./components/FeatureSelector";
+import RecommendationList from "./components/RecommendationList";
+import {
+  fetchCutoffs,
+  fetchRecommendations,
+} from "./services/api";
 
-const categories = [
-  "GN", "SC", "ST", "EZ", "MU", "BH", "BX", "EW",
-];
+const categories = ["GN", "SC", "ST", "EZ", "MU", "BH", "BX", "EW"];
 
-const courses = [
-  "CS", "ME", "EC", "CE", "EE", "AD", "CY", "AH",
-];
+const courses = ["CS", "ME", "EC", "CE", "EE", "AD", "CY", "AH"];
 
 const collegeTypes = [
   { label: "Government", value: "government" },
@@ -21,21 +22,34 @@ const collegeTypes = [
 function App() {
   const [rank, setRank] = useState("");
   const [category, setCategory] = useState("GN");
+
   const [selectedCourses, setSelectedCourses] = useState(["CS"]);
+
   const [selectedTypes, setSelectedTypes] = useState(
     collegeTypes.map((type) => type.value)
   );
 
+  const [mode, setMode] = useState("cutoffs");
   const [cutoffs, setCutoffs] = useState([]);
+  const [recommendations, setRecommendations] = useState([]);
+
   const [searched, setSearched] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  function toggleSelection(value, selected, setSelected) {
-    setSelected(
-      selected.includes(value)
-        ? selected.filter((item) => item !== value)
-        : [...selected, value]
+  function toggleCourse(course) {
+    setSelectedCourses((previous) =>
+      previous.includes(course)
+        ? previous.filter((item) => item !== course)
+        : [...previous, course]
+    );
+  }
+
+  function toggleType(type) {
+    setSelectedTypes((previous) =>
+      previous.includes(type)
+        ? previous.filter((item) => item !== type)
+        : [...previous, type]
     );
   }
 
@@ -45,8 +59,13 @@ function App() {
     setError("");
     setSearched(false);
     setCutoffs([]);
+    setRecommendations([]);
 
-    if (!rank || Number(rank) <= 0 || !Number.isInteger(Number(rank))) {
+    if (
+      !rank ||
+      !Number.isInteger(Number(rank)) ||
+      Number(rank) <= 0
+    ) {
       setError("Enter a valid positive whole-number KEAM rank.");
       return;
     }
@@ -61,33 +80,24 @@ function App() {
       return;
     }
 
+    const payload = {
+      keam_rank: Number(rank),
+      category,
+      courses: selectedCourses,
+      types: selectedTypes,
+    };
+
     setLoading(true);
 
     try {
-      const response = await fetch(API_URL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          keam_rank: Number(rank),
-          category,
-          courses: selectedCourses,
-          types: selectedTypes,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          typeof data.detail === "string"
-            ? data.detail
-            : "Unable to retrieve cutoff data."
-        );
+      if (mode === "cutoffs") {
+        const data = await fetchCutoffs(payload);
+        setCutoffs(data.cutoffs ?? []);
+      } else {
+        const data = await fetchRecommendations(payload);
+        setRecommendations(data.recommendations ?? []);
       }
 
-      setCutoffs(data.cutoffs ?? []);
       setSearched(true);
     } catch (err) {
       setError(
@@ -105,65 +115,71 @@ function App() {
     setCategory("GN");
     setSelectedCourses(["CS"]);
     setSelectedTypes(collegeTypes.map((type) => type.value));
+
     setCutoffs([]);
+    setRecommendations([]);
+    setSearched(false);
+    setLoading(false);
+    setError("");
+  }
+
+  function changeMode(nextMode) {
+    setMode(nextMode);
+    setCutoffs([]);
+    setRecommendations([]);
     setSearched(false);
     setError("");
   }
 
+  const resultCount =
+    mode === "cutoffs" ? cutoffs.length : recommendations.length;
+
   return (
-    <main className="app-shell">
-      <header className="topbar">
-        <a className="brand" href="/">
-          <span className="brand-mark">E</span>
-          <span>Edu-Cater</span>
-        </a>
-        <span className="topbar-label">KEAM College Explorer</span>
+    <main className="app-container">
+      <header className="app-header">
+        <div className="brand">
+          <div className="brand-mark">E</div>
+          <div>
+            <h1>Edu-Cater</h1>
+            <p>KEAM College Selection Assistant</p>
+          </div>
+        </div>
       </header>
 
       <section className="hero">
-        <span className="eyebrow">YOUR ADMISSION JOURNEY</span>
-        <h1>Find colleges that fit your rank.</h1>
+        <p className="eyebrow">YOUR ADMISSION, SIMPLIFIED</p>
+        <h1>Find the right college for your rank.</h1>
         <p>
-          Explore colleges using KEAM cutoff data. Choose your preferences
-          to find matching courses and institutions.
+          Explore historical cutoff data or get AI-powered college
+          recommendations based on your KEAM rank, category, and preferences.
         </p>
       </section>
 
+      <FeatureSelector mode={mode} onChange={changeMode} />
+
       <section className="finder-layout">
-        <form className="filter-panel" onSubmit={handleSubmit}>
-          <div className="panel-heading">
-            <div>
-              <span className="section-kicker">STEP 01</span>
-              <h2>Your preferences</h2>
-            </div>
-            <button
-              className="text-button"
-              type="button"
-              onClick={resetForm}
-            >
-              Reset
-            </button>
+        <form className="finder-form" onSubmit={handleSubmit}>
+          <div className="section-heading">
+            <h2>Admission preferences</h2>
+            <p>Enter your details to get started.</p>
           </div>
 
-          <div className="field-group">
+          <div className="form-group">
             <label htmlFor="rank">KEAM rank</label>
             <input
               id="rank"
               type="number"
               min="1"
               step="1"
-              placeholder="e.g. 15000"
+              placeholder="e.g. 4500"
               value={rank}
               onChange={(event) => setRank(event.target.value)}
               required
             />
-            <span className="field-hint">
-              Enter your overall rank.
-            </span>
           </div>
 
-          <div className="field-group">
-            <label htmlFor="category">Admission category</label>
+          <div className="form-group">
+            <label htmlFor="category">Reservation category</label>
             <select
               id="category"
               value={category}
@@ -175,29 +191,17 @@ function App() {
                 </option>
               ))}
             </select>
-            <span className="field-hint">
-              Select the category used for cutoff matching.
-            </span>
           </div>
 
-          <fieldset className="field-group">
+          <fieldset className="form-group">
             <legend>Preferred courses</legend>
-            <p className="field-hint group-hint">
-              Select one or more courses.
-            </p>
-            <div className="choice-grid">
+            <div className="checkbox-grid">
               {courses.map((course) => (
-                <label className="choice" key={course}>
+                <label className="checkbox-option" key={course}>
                   <input
                     type="checkbox"
                     checked={selectedCourses.includes(course)}
-                    onChange={() =>
-                      toggleSelection(
-                        course,
-                        selectedCourses,
-                        setSelectedCourses
-                      )
-                    }
+                    onChange={() => toggleCourse(course)}
                   />
                   <span>{course}</span>
                 </label>
@@ -205,31 +209,19 @@ function App() {
             </div>
           </fieldset>
 
-          <fieldset className="field-group">
-            <legend>College type</legend>
-            <p className="field-hint group-hint">
-              Choose the institutions to include.
-            </p>
-            <div className="type-options">
-              
+          <fieldset className="form-group">
+            <legend>College types</legend>
+            <div className="checkbox-list">
               {collegeTypes.map((type) => (
-                <label className="type-choice" key={type.value}>
+                <label className="checkbox-option" key={type.value}>
                   <input
                     type="checkbox"
                     checked={selectedTypes.includes(type.value)}
-                    onChange={() =>
-                      toggleSelection(
-                        type.value,
-                        selectedTypes,
-                        setSelectedTypes
-                      )
-                    }
+                    onChange={() => toggleType(type.value)}
                   />
                   <span>{type.label}</span>
                 </label>
               ))}
-
-              
             </div>
           </fieldset>
 
@@ -239,139 +231,135 @@ function App() {
             </div>
           )}
 
-          <button className="submit-button" type="submit" disabled={loading}>
-            {loading ? "Searching..." : "Find matching colleges"}
-            {!loading && <span aria-hidden="true">→</span>}
-          </button>
+          <div className="form-actions">
+            <button
+              className="primary-button"
+              type="submit"
+              disabled={loading}
+            >
+              {loading
+                ? "Processing..."
+                : mode === "cutoffs"
+                  ? "Find colleges"
+                  : "Get recommendations"}
+            </button>
 
-          <p className="privacy-note">
-            Results are based on available cutoff records, not a guarantee
-            of admission.
-          </p>
+            <button
+              className="secondary-button"
+              type="button"
+              onClick={resetForm}
+              disabled={loading}
+            >
+              Reset
+            </button>
+          </div>
         </form>
 
-        <section className="results-panel" aria-live="polite">
-          <div className="results-heading">
+        <section className="results-panel">
+          <div className="results-header">
             <div>
-              <span className="section-kicker">STEP 02</span>
-              <h2>Matching colleges</h2>
-            </div>
-            {searched && (
-              <span className="result-count">
-                {cutoffs.length} {cutoffs.length === 1 ? "result" : "results"}
-              </span>
-            )}
-          </div>
-
-          {!searched && !loading && (
-            <div className="empty-state">
-              <div className="empty-icon" aria-hidden="true">
-                <svg
-                  viewBox="0 0 48 48"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <rect
-                    x="7"
-                    y="14"
-                    width="34"
-                    height="27"
-                    rx="3"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                  />
-                  <path
-                    d="M17 14V9h14v5M17 23h14M17 30h9"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </div>
-              <h3>Your results will appear here</h3>
+              <h2>
+                {mode === "cutoffs"
+                  ? "Matching colleges"
+                  : "AI recommendations"}
+              </h2>
               <p>
-                Enter your rank, select your preferences, and run a search
-                to explore matching colleges.
+                {loading
+                  ? "Finding suitable colleges..."
+                  : searched
+                    ? `${resultCount} result${resultCount === 1 ? "" : "s"} found`
+                    : "Your results will appear here."}
               </p>
             </div>
-          )}
+          </div>
 
           {loading && (
             <div className="empty-state">
-              <div className="loader" />
-              <h3>Finding matching colleges</h3>
-              <p>Retrieving cutoff records from the database.</p>
-            </div>
-          )}
-
-          {searched && cutoffs.length === 0 && !loading && (
-            <div className="empty-state">
-              <div className="empty-icon" aria-hidden="true">!</div>
-              <h3>No matching colleges found</h3>
               <p>
-                No records matched these filters. Try different preferences
-                or check again after the cutoff data has been updated.
+                {mode === "cutoffs"
+                  ? "Searching historical cutoff data..."
+                  : "Generating college recommendations..."}
               </p>
             </div>
           )}
 
-          {searched && cutoffs.length > 0 && (
-            <div className="table-wrapper">
-              <table className="results-table">
-                <thead>
-                  <tr>
-                    <th>College</th>
-                    <th>Course</th>
-                    <th>Opening rank</th>
-                    <th>Cutoff rank</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {cutoffs.map((college, index) => (
-                    <tr
-                      key={[
-                        college.college_id,
-                        college.course_code,
-                        college.category,
-                        index,
-                      ].join("-")}
-                    >
-                      <td>
-                        <div className="college-name">
-                          {college.college_name}
-                        </div>
-                        <div className="college-meta">
-                          {college.college_code}
-                          {college.district
-                            ? ` · ${college.district}`
-                            : ""}
-                        </div>
-                        <span className="college-type-badge">
-                          {college.college_type}
-                        </span>
-                      </td>
-                      <td>{college.course_code}</td>
-                      <td>{college.opening_rank ?? "N/A"}</td>
-                      <td className="cutoff-value">
-                        {college.cutoff_rank ?? "N/A"}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              <p className="results-footnote">
-                Cutoff ranks are based on the records currently available
-                in the database.
+          {!loading && !searched && (
+            <div className="empty-state">
+              <h3>Ready when you are</h3>
+              <p>
+                Enter your KEAM rank, choose your preferences, and submit
+                the form to see your results.
               </p>
             </div>
+          )}
+
+          {!loading && searched && mode === "cutoffs" &&
+            cutoffs.length === 0 && (
+              <div className="empty-state">
+                <h3>No matching colleges</h3>
+                <p>
+                  Try a different category, course, or college type.
+                </p>
+              </div>
+            )}
+
+          {!loading && searched && mode === "cutoffs" &&
+            cutoffs.length > 0 && (
+              <div className="table-wrapper">
+                <table className="cutoff-table">
+                  <thead>
+                    <tr>
+                      <th>College</th>
+                      <th>Course</th>
+                      <th>Category</th>
+                      <th>Closing rank</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {cutoffs.map((college, index) => (
+                      <tr
+                        key={
+                          college.id ??
+                          `${college.college_code}-${college.course_code}-${index}`
+                        }
+                      >
+                        <td>
+                          <strong>
+                            {college.college_name ??
+                              college.name ??
+                              "Unknown college"}
+                          </strong>
+                          <span className="table-subtext">
+                            {college.college_code ?? ""}
+                          </span>
+                        </td>
+                        <td>
+                          {college.course_name ??
+                            college.course_code ??
+                            "N/A"}
+                        </td>
+                        <td>
+                          {college.category ??
+                            college.applied_category ??
+                            category}
+                        </td>
+                        <td>
+                          {college.closing_rank ??
+                            college.category_closing_rank ??
+                            "N/A"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+
+          {!loading && searched && mode === "recommendations" && (
+            <RecommendationList recommendations={recommendations} />
           )}
         </section>
       </section>
-
-      <footer className="app-footer">
-        <span>Edu-Cater</span>
-        <span>KEAM Cutoff Finder</span>
-      </footer>
     </main>
   );
 }

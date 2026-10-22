@@ -6,12 +6,14 @@ from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 from app.database import engine
 
-from app.database import engine
+from app.routes.recommendations import router as recommendations_router
 
 app = FastAPI(title="Edu-Cater API")
 
-#route for recc api
+#route for cutoff colleges api
 app.include_router(cutoff_router)
+#route for recc api
+app.include_router(recommendations_router)
 
 #middleware with frontend details
 app.add_middleware(
@@ -88,6 +90,9 @@ def debug_cutoffs():
             ORDER BY college_type
         """,
     }
+
+    #ML Route for Recommendations
+    
 
     output = {}
 
